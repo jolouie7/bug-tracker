@@ -20,32 +20,45 @@ ChartJS.register(
 );
 
 export const options = {
+  scales: {
+    x: {
+      ticks: {
+        font: {
+          size: 16, // Set the font size for X-axis labels
+        },
+      },
+    },
+  },
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       position: "top" as const,
     },
     title: {
       display: true,
-      text: "Chart.js Bar Chart",
+      text: "Ticket by Priority",
+      font: {
+        size: 30,
+      },
     },
   },
 };
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+const labels = ["None", "Low", "Medium", "High"];
+const chartData = {
+  labels: labels,
+  data: [2, 3, 4, 1], // Replace when API is implemented
+  backgroundColor: ["#264653", "#2a9d8f", "#e9c46a", "#f4a261"],
+};
 
 export const data = {
   labels,
   datasets: [
     {
-      label: "Dataset 1",
-      data: labels.map(() => 500),
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-    {
-      label: "Dataset 2",
-      data: labels.map(() => 101),
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
+      label: "Ticket Count",
+      data: chartData.data.map((data) => data),
+      backgroundColor: chartData.backgroundColor.map((color) => color),
     },
   ],
 };
@@ -53,7 +66,7 @@ export const data = {
 const BarChart = () => {
   return (
     <>
-      <Bar options={options} data={data} />;
+      <Bar options={options} data={data} width={800} height={400} />
     </>
   );
 };
