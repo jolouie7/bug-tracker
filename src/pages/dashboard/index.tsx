@@ -1,5 +1,5 @@
-import SidebarWithHeader from "@/components/SidebarWithHeader/SidebarWithHeader";
-import Bar from "../../components/Bar";
+import SidebarWithHeader from "@/components/sidebarWithHeader/SidebarWithHeader";
+import Bar from "../../components/bar/Bar";
 import { Box, Center, Flex } from "@chakra-ui/react";
 
 export default function Dashboard() {
