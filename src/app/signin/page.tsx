@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Flex,
   Box,
@@ -12,8 +14,9 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 
-export default function Signin() {
+export default function SignInPage() {
   return (
     <Flex
       minH={"100vh"}
@@ -52,7 +55,7 @@ export default function Signin() {
               <Stack>
                 <Text align={"center"}>
                   Create an account?{" "}
-                  <Link color={"blue.400"} href="/signup">
+                  <Link as={NextLink} color={"blue.400"} href="/signup">
                     Sign Up
                   </Link>
                 </Text>

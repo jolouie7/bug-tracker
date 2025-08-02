@@ -1,7 +1,8 @@
+"use client";
+
 import { useUser } from "@clerk/nextjs";
 
-export default function Home() {
-  // Use the useUser hook to get the Clerk.user object
+export default function HomePage() {
   const { isLoaded, isSignedIn, user } = useUser();
 
   if (!isLoaded || !isSignedIn) {
@@ -11,8 +12,6 @@ export default function Home() {
   console.log(user);
 
   return (
-    <>
-      <main>Hello {user.primaryEmailAddress?.emailAddress}!!</main>
-    </>
+    <main>Hello {user.primaryEmailAddress?.emailAddress}!!</main>
   );
 }

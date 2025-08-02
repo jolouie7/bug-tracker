@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Flex,
   Box,
@@ -16,8 +18,9 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import NextLink from "next/link";
 
-export default function Signup() {
+export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -90,7 +93,7 @@ export default function Signup() {
             <Stack pt={6}>
               <Text align={"center"}>
                 Already a user?{" "}
-                <Link color={"blue.400"} href="/signin">
+                <Link as={NextLink} color={"blue.400"} href="/signin">
                   Sign In
                 </Link>
               </Text>
