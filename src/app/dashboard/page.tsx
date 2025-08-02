@@ -1,26 +1,26 @@
-import SidebarWithHeader from "@/components/sidebarWithHeader/SidebarWithHeader";
+import { SidebarLayout } from "@/components/layout/sidebar-layout";
 import Bar from "@/components/bar/Bar";
-import { Box, Flex } from "@chakra-ui/react";
 
 export default function DashboardPage() {
   return (
-    <SidebarWithHeader>
-      <h1>Hello, SidebarWithHeader!</h1>
-      <Flex flexWrap="wrap" flexGrow={1}>
-        {/* Four equal squares */}
-        <Box w={["100%", "50%"]} p={4}>
-          <Bar />
-        </Box>
-        <Box w={["100%", "50%"]} p={4}>
-          <Bar />
-        </Box>
-        <Box w={["100%", "50%"]} p={4}>
-          <Bar />
-        </Box>
-        <Box w={["100%", "50%"]} p={4}>
-          <Bar />
-        </Box>
-      </Flex>
-    </SidebarWithHeader>
+    <SidebarLayout>
+      <div>
+        <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="p-4">
+            <Bar />
+          </div>
+          <div className="p-4">
+            <Bar />
+          </div>
+          <div className="p-4">
+            <Bar />
+          </div>
+          <div className="p-4">
+            <Bar />
+          </div>
+        </div>
+      </div>
+    </SidebarLayout>
   );
 }

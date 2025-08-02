@@ -1,17 +1,7 @@
-"use client";
-
-import { useUser } from "@clerk/nextjs";
-
 export default function HomePage() {
-  const { isLoaded, isSignedIn, user } = useUser();
-
-  if (!isLoaded || !isSignedIn) {
-    return null;
-  }
-
-  console.log(user);
-
   return (
-    <main>Hello {user.primaryEmailAddress?.emailAddress}!!</main>
+    <main className="flex items-center justify-center min-h-screen">
+      <h1 className="text-4xl font-bold">Welcome to Bug Tracker</h1>
+    </main>
   );
 }
