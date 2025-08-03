@@ -489,8 +489,8 @@ export default function HomePage() {
                   ))}
                 </div>
                 <CardDescription>
-                  "BugTracker Pro transformed our development process. We ship
-                  40% faster now with fewer bugs in production."
+                  &quot;BugTracker Pro transformed our development process. We
+                  ship 40% faster now with fewer bugs in production.&quot;
                 </CardDescription>
                 <div className="mt-4">
                   <p className="font-semibold">Sarah Chen</p>
@@ -512,8 +512,8 @@ export default function HomePage() {
                   ))}
                 </div>
                 <CardDescription>
-                  "The best bug tracking tool we've used. Simple, powerful, and
-                  the team actually enjoys using it."
+                  &quot;The best bug tracking tool we&apos;ve used. Simple,
+                  powerful, and the team actually enjoys using it.&quot;
                 </CardDescription>
                 <div className="mt-4">
                   <p className="font-semibold">Michael Rodriguez</p>
@@ -535,8 +535,8 @@ export default function HomePage() {
                   ))}
                 </div>
                 <CardDescription>
-                  "Outstanding customer support and the analytics features give
-                  us insights we never had before."
+                  &quot;Outstanding customer support and the analytics features
+                  give us insights we never had before.&quot;
                 </CardDescription>
                 <div className="mt-4">
                   <p className="font-semibold">Emily Watson</p>
