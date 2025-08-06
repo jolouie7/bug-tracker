@@ -1,0 +1,168 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  firstName    String
+  lastName     String
+  avatarUrl    String?
+  email        String    @unique
+  password     String
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // Relations
+  createdProjects     Project[]
+  projectAssignments  ProjectUser[]
+  assignedTickets     Ticket[]         @relation("AssignedDeveloper")
+  reportedTickets     Ticket[]         @relation("Reporter")
+  comments            Comment[]
+  ticketHistories     TicketHistory[]
+  attachments         Attachment[]
+}
+
+model Project {
+  id                 Int       @id @default(autoincrement())
+  projectName        String
+  projectDescription String?
+  startDate          DateTime?
+  endDate            DateTime?
+  createdById        Int
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  deletedAt          DateTime?
+
+  // Relations
+  createdBy     User           @relation(fields: [createdById], references: [id])
+  projectUsers  ProjectUser[]
+  ticketStatuses TicketStatus[]
+  tickets       Ticket[]
+}
+
+enum ProjectRole {
+  reporter
+  tester
+  developer
+  manager
+  admin
+  viewer
+}
+
+model ProjectUser {
+  id        Int         @id @default(autoincrement())
+  projectId Int
+  userId    Int
+  role      ProjectRole @default(viewer)
+
+  // Relations
+  project Project @relation(fields: [projectId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+
+  @@unique([projectId, userId])
+}
+
+model TicketStatus {
+  id        Int      @id @default(autoincrement())
+  name      String
+  color     String?
+  sortOrder Int?
+  projectId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  project Project  @relation(fields: [projectId], references: [id])
+  tickets Ticket[]
+}
+
+enum TicketType {
+  bug
+  feature
+  task
+}
+
+enum TicketPriority {
+  low
+  medium
+  high
+  critical
+}
+
+model Ticket {
+  id                Int             @id @default(autoincrement())
+  ticketTitle       String
+  ticketDescription String?
+  assignedDeveloper Int?
+  reporterId        Int
+  projectId         Int
+  statusId          Int
+  ticketPriority    TicketPriority?
+  ticketType        TicketType?
+  dueDate           DateTime?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  deletedAt         DateTime?
+
+  // Relations
+  assignedTo      User?           @relation("AssignedDeveloper", fields: [assignedDeveloper], references: [id])
+  reporter        User            @relation("Reporter", fields: [reporterId], references: [id])
+  project         Project         @relation(fields: [projectId], references: [id])
+  status          TicketStatus    @relation(fields: [statusId], references: [id])
+  comments        Comment[]
+  ticketHistories TicketHistory[]
+  attachments     Attachment[]
+}
+
+model Comment {
+  id                 Int      @id @default(autoincrement())
+  commentDescription String
+  commenter          Int
+  ticketId           Int
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  // Relations
+  user   User   @relation(fields: [commenter], references: [id])
+  ticket Ticket @relation(fields: [ticketId], references: [id])
+}
+
+model TicketHistory {
+  id            Int      @id @default(autoincrement())
+  ticketId      Int
+  changedById   Int
+  changeType    String   // "status_change", "priority_change", etc.
+  changeDetails Json     // {"from": "low", "to": "high"}
+  createdAt     DateTime @default(now())
+
+  // Relations
+  ticket    Ticket @relation(fields: [ticketId], references: [id])
+  changedBy User   @relation(fields: [changedById], references: [id])
+}
+
+model Attachment {
+  id           Int      @id @default(autoincrement())
+  fileName     String?
+  fileUrl      String?
+  fileSize     Int?
+  mimeType     String?
+  ticketId     Int
+  uploadedById Int
+  createdAt    DateTime @default(now())
+
+  // Relations
+  ticket     Ticket @relation(fields: [ticketId], references: [id])
+  uploadedBy User   @relation(fields: [uploadedById], references: [id])
+}
